@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+  auth-service-db:
+    container_name: auth-service-db
+    env_file:
+      - ./envgen/generated/auth-service-db/.env.local
+    image: postgres:14.5-alpine
+    ports:
+      - ${POSTGRES_DB_PORT}:5432
+    volumes:
+      - auth-postgres-db-data:/var/lib/postgresql/data
+
+  pgadmin:
+    env_file:
+      - ./envgen/generated/pgadmin/.env.local
+    depends_on:
+      - app-db
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    ports:
+      - ${PG_ADMIN_DOCKER_HOST_PORT}:80
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: mailhog
+    logging:
+      driver: 'none' # disable saving logs
+    ports:
+      - ${MAILHOG_WEB_UI_DOCKER_HOST_PORT}:8025
+      - ${MAILHOG_SMTP_DOCKER_HOST_PORT}:1025
+
+  localstack:
+    image: localstack/localstack:latest
+    environment:
+      - AWS_DEFAULT_REGION=us-east-1
+      - EDGE_PORT=4566
+      - SERVICES=lambda,s3
+    ports:
+      - '4566-4583:4566-4583'
+    volumes:
+      - '${TEMPDIR:-/tmp/localstack}:/tmp/localstack'
+      - '/var/run/docker.sock:/var/run/docker.sock'
+
+volumes:
+  auth-postgres-db-data: {}
+  # localstack-tmp: {}
+# TODO: look into setting up NFS volumes for improved dev performance https://www.jeffgeerling.com/blog/2020/revisiting-docker-macs-performance-nfs-volumes

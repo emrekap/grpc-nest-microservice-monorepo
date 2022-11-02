@@ -1,0 +1,70 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  // previewFeatures = ["interactiveTransactions"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @id @db.VarChar(36)
+
+  email                  String            @unique @db.VarChar(256)
+  firstName              String            @map("first_name") @db.VarChar(256)
+  lastName               String            @map("last_name") @db.VarChar(256)
+  password               String            @db.VarChar(512)
+  role                   UserRoleEnum      @default(user)
+  avatarImageUrl         String            @default("https://gravatar.com/avatar/2f7946d618d282ce59f3eda2d1359d0e?s=400&d=robohash&r=x") @map("avatar_image_url") @db.VarChar(512)
+  welcomeExperienceShown Boolean           @default(false) @map("welcome_experience_shown")
+  isDisabled             Boolean           @default(false) @map("is_disabled")
+  createdAt              DateTime          @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt              DateTime          @updatedAt @map("updated_at") @db.Timestamptz(6)
+  paidPlan               UsersOnPaidPlan[]
+
+  @@map("users")
+}
+
+model PaidPlanType {
+  id        String   @id @db.VarChar(36)
+  isActive  Boolean  @default(true)
+  name      String   @db.VarChar(256)
+  detail    String   @db.Text
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  UsersOnPaidPlan UsersOnPaidPlan[]
+
+  @@map("paid_plan_types")
+}
+
+model UsersOnPaidPlan {
+  id             String       @id @db.VarChar(36)
+  userId         String       @db.VarChar(36)
+  user           User         @relation(fields: [userId], references: [id])
+  paidPlanTypeId String       @db.VarChar(36)
+  paidPlanType   PaidPlanType @relation(fields: [paidPlanTypeId], references: [id])
+  createdAt      DateTime     @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt      DateTime     @updatedAt @map("updated_at") @db.Timestamptz(6)
+  validUntilAt   DateTime     @map("valid_until_at") @db.Timestamptz(6)
+
+  @@map("user_on_paid_plans")
+}
+
+enum UserRoleEnum {
+  influencer
+  user
+  admin
+  agencyUser
+  agencyAdmin
+
+  @@map("user_role_enum")
+}
+
+enum TokenTypeEnum {
+  EMAIL
+}

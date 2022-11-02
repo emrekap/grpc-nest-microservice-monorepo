@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  db-migrations:
+    build:
+      context: .
+      dockerfile: ./packages/db/Dockerfile
+
+  nestjs-app-backend-prebuild:
+    build:
+      context: .
+      dockerfile: ./services/nestjs-app-backend/Dockerfile
+      target: prebuild
+
+  nestjs-app-backend-build:
+    build:
+      context: .
+      dockerfile: ./services/nestjs-app-backend/Dockerfile
+      target: build

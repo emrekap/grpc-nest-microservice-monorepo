@@ -37,6 +37,7 @@
     "ts-proto": "^1.131.0"
   },
   "devDependencies": {
+    "@types/express": "^4.17.14",
     "jest": "^27.2.5"
   },
   "jest": {

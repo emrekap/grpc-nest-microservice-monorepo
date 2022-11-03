@@ -20,7 +20,7 @@ message RegisterRequest {
 message RegisterResponse {
   int32 status = 1;
   repeated string error = 2;
-  object user = 3;
+  string user = 3;
 }
 
 // Login

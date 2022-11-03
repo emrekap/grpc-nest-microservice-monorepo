@@ -19,7 +19,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "proto:auth": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto -I=../packages/monorepo-grpc-proto-files/proto --ts_proto_out=src/auth/ ../packages/monorepo-grpc-proto-files/proto/auth.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb"
+    "proto:auth": "sudo protoc --plugin=node_modules/.bin/protoc-gen-ts_proto -I=node_modules/@grpc-monorepo/proto --ts_proto_out=src/auth node_modules/@grpc-monorepo/proto/auth.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.5.8",
@@ -31,7 +31,6 @@
     "@nestjs/microservices": "^8.4.1",
     "@nestjs/passport": "^8.2.1",
     "@nestjs/platform-express": "^8.0.0",
-    "@nestjs/typeorm": "^8.0.3",
     "@prisma/client": "^4.5.0",
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.5.1",
@@ -45,8 +44,7 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
-    "ts-custom-error": "3.2.0",
-    "typeorm": "^0.2.45"
+    "ts-custom-error": "3.2.0"
   },
   "devDependencies": {
     "@types/passport-jwt": "^3.0.6",

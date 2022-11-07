@@ -7,19 +7,9 @@ services:
       - ./envgen/generated/auth-service-db/.env.local
     image: postgres:14.5-alpine
     ports:
-      - ${POSTGRES_DB_PORT}:5432
+      - ${AUTH_DB_DOCKER_HOST_PORT}:5432
     volumes:
       - auth-postgres-db-data:/var/lib/postgresql/data
-
-  pgadmin:
-    env_file:
-      - ./envgen/generated/pgadmin/.env.local
-    depends_on:
-      - app-db
-    container_name: pgadmin
-    image: dpage/pgadmin4
-    ports:
-      - ${PG_ADMIN_DOCKER_HOST_PORT}:80
 
   mailhog:
     image: mailhog/mailhog

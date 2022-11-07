@@ -2,13 +2,15 @@
   "name": "@appreciate/root",
   "private": true,
   "scripts": {
-    "envgen": "sudo ts-node ./envgen --resolveJsonModule",
-    "codegen": "cd /appreciate-monorepo/services/nestjs-app-backend && npm run codegen",
+    "envgen": "sudo npx ts-node ./envgen --resolveJsonModule",
     "prune": "lerna bootstrap -- --production && npm prune --production",
     "build-nestjs-app-backend": "sudo docker build -f ./services/nestjs-app-backend/Dockerfile .",
     "build-db-migrations": "sudo docker build -f ./packages/db/Dockerfile .",
     "sync": "sh ./devbox/sync.sh",
     "init": "sh ./devbox/init.sh"
+  },
+  "dependencies": {
+    "dotenv-cli": "6.0.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",

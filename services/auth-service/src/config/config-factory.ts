@@ -1,5 +1,5 @@
-import path from 'path';
-import dotenv from 'dotenv';
+import * as path from 'path';
+import * as dotenv from 'dotenv';
 import { v4, validate } from 'uuid';
 
 import { FactoryProvider } from '@nestjs/common';
@@ -65,14 +65,15 @@ export class CodecError extends ApiError {
 
 export const tryDecodeCodec = <T>(codec: any, data: any) => {
   const decoded = codec.decode(data);
-
   if (decoded._tag === 'Left') {
     const fields: string[] = [];
     decoded.left.forEach((validationError: any, index: any) => {
-      const keysList = validationError.context.filter((x) => x.key !== '').map((v: any) => v.key);
+      const keysList = validationError.context
+        .filter((x) => x.key !== '')
+        .map((v: any) => v.key);
       const key = keysList.join(' > ');
       fields.push(key);
-      if (process.env.NODE_ENV === 'development') {
+      if (process.env.LOCAL === 'true') {
         console.error(`Index: ${index}, Key: ${key}`);
       }
     });
@@ -90,7 +91,12 @@ export const configMock: Config = {
 };
 
 const configCodec = t.type({
-  NODE_ENV: t.union([t.literal('production'), t.literal('test'), t.literal('development'), t.literal('staging')]),
+  NODE_ENV: t.union([
+    t.literal('production'),
+    t.literal('test'),
+    t.literal('development'),
+    t.literal('staging'),
+  ]),
   DATABASE_URL: t.string,
 });
 
@@ -99,7 +105,7 @@ export function useFactory() {
     console.log('first');
     if (process.env.LOCAL === 'true') {
       dotenv.config({
-        path: path.join(__dirname, '../../.env'),
+        path: path.join(__dirname, '../../.env.local'),
       });
     }
     if (process.env.NODE_ENV === 'test') {
@@ -109,7 +115,8 @@ export function useFactory() {
     const config = tryDecodeCodec<Config>(configCodec, process.env);
 
     return config;
-  } catch (error) {
+  } catch (e) {
+    console.log(e);
     throw new Error(`Environment not configured properly.`);
   }
 }

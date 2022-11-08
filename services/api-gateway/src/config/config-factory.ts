@@ -1,17 +1,10 @@
 import * as path from 'path';
 import * as dotenv from 'dotenv';
+import { v4, validate } from 'uuid';
+
 import { FactoryProvider } from '@nestjs/common';
 import * as t from 'io-ts';
 import { classMaker, tryDecodeCodec } from '@grpc-monorepo/ts-shared';
-
-export const Config = classMaker<t.TypeOf<typeof configCodec>>();
-export type Config = InstanceType<typeof Config>;
-
-export const configMock: Config = {
-  NODE_ENV: 'test',
-  DATABASE_URL: '',
-  APP_BACKEND_BASE_URL: '',
-};
 
 const configCodec = t.type({
   NODE_ENV: t.union([
@@ -23,6 +16,15 @@ const configCodec = t.type({
   DATABASE_URL: t.string,
   APP_BACKEND_BASE_URL: t.string,
 });
+
+export const Config = classMaker<t.TypeOf<typeof configCodec>>();
+export type Config = InstanceType<typeof Config>;
+
+export const configMock: Config = {
+  NODE_ENV: 'test',
+  DATABASE_URL: '',
+  APP_BACKEND_BASE_URL: '',
+};
 
 export function useFactory() {
   try {

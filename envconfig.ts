@@ -62,6 +62,7 @@ export const configs: Config[] = [
       AUTH_DB_DOCKER_HOST_PORT: AUTH_DB_DOCKER_HOST_PORT,
       NODE_ENV: 'development',
       DATABASE_URL: AUTH_SERVICE_DB_URL,
+      APP_BACKEND_BASE_URL,
     },
   },
   {
@@ -76,6 +77,7 @@ export const configs: Config[] = [
     filename: '.env.local',
     variables: {
       NODE_ENV: 'development',
+      APP_BACKEND_BASE_URL,
     },
   },
   {

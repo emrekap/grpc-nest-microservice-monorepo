@@ -1,5 +1,5 @@
 {
-  "name": "@monorepo-grpc/proto-files",
+  "name": "@grpc-monorepo/proto",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",

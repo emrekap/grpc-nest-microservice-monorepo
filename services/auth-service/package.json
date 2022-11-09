@@ -20,7 +20,7 @@
     "test:cov": "LOCAL=true jest --coverage",
     "test:debug": "LOCAL=true node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "LOCAL=true jest --config ./test/jest-e2e.json",
-    "proto:auth": "sudo protoc --plugin=node_modules/.bin/protoc-gen-ts_proto -I=node_modules/@grpc-monorepo/proto --ts_proto_out=src/auth node_modules/@grpc-monorepo/proto/auth.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb"
+    "proto:auth": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto -I=node_modules/@grpc-monorepo/proto --ts_proto_out=src/auth node_modules/@grpc-monorepo/proto/auth.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb"
   },
   "dependencies": {
     "@app/routes": "0.0.1",
@@ -51,6 +51,9 @@
     "ts-custom-error": "3.2.0"
   },
   "devDependencies": {
+    "ts-proto": "1.131.0",
+    "protoc-gen-ts": "0.8.5",
+    "@protobuf-ts/plugin": "2.8.1",
     "@types/express": "^4.17.14",
     "@types/passport-jwt": "^3.0.6",
     "@types/supertest": "^2.0.11",

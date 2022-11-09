@@ -1,7 +1,5 @@
 /* eslint-disable */
 import { GrpcMethod, GrpcStreamMethod } from '@nestjs/microservices';
-import { util, configure } from 'protobufjs/minimal';
-import * as Long from 'long';
 import { Observable } from 'rxjs';
 
 export const protobufPackage = 'auth';
@@ -9,11 +7,14 @@ export const protobufPackage = 'auth';
 export interface RegisterRequest {
   email: string;
   password: string;
+  firstname: string;
+  lastname: string;
 }
 
 export interface RegisterResponse {
   status: number;
   error: string[];
+  user: string;
 }
 
 export interface LoginRequest {
@@ -34,7 +35,7 @@ export interface ValidateRequest {
 export interface ValidateResponse {
   status: number;
   error: string[];
-  userId: string;
+  userId: number;
 }
 
 export const AUTH_PACKAGE_NAME = 'auth';
@@ -48,33 +49,52 @@ export interface AuthServiceClient {
 }
 
 export interface AuthServiceController {
-  register(request: RegisterRequest): Promise<RegisterResponse> | Observable<RegisterResponse> | RegisterResponse;
+  register(
+    request: RegisterRequest,
+  ):
+    | Promise<RegisterResponse>
+    | Observable<RegisterResponse>
+    | RegisterResponse;
 
-  login(request: LoginRequest): Promise<LoginResponse> | Observable<LoginResponse> | LoginResponse;
+  login(
+    request: LoginRequest,
+  ): Promise<LoginResponse> | Observable<LoginResponse> | LoginResponse;
 
-  validate(request: ValidateRequest): Promise<ValidateResponse> | Observable<ValidateResponse> | ValidateResponse;
+  validate(
+    request: ValidateRequest,
+  ):
+    | Promise<ValidateResponse>
+    | Observable<ValidateResponse>
+    | ValidateResponse;
 }
 
 export function AuthServiceControllerMethods() {
   return function (constructor: Function) {
     const grpcMethods: string[] = ['register', 'login', 'validate'];
     for (const method of grpcMethods) {
-      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-      GrpcMethod('AuthService', method)(constructor.prototype[method], method, descriptor);
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(
+        constructor.prototype,
+        method,
+      );
+      GrpcMethod('AuthService', method)(
+        constructor.prototype[method],
+        method,
+        descriptor,
+      );
     }
     const grpcStreamMethods: string[] = [];
     for (const method of grpcStreamMethods) {
-      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-      GrpcStreamMethod('AuthService', method)(constructor.prototype[method], method, descriptor);
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(
+        constructor.prototype,
+        method,
+      );
+      GrpcStreamMethod('AuthService', method)(
+        constructor.prototype[method],
+        method,
+        descriptor,
+      );
     }
   };
 }
 
 export const AUTH_SERVICE_NAME = 'AuthService';
-
-// If you get a compile-error about 'Constructor<Long> and ... have no overlap',
-// add '--ts_proto_opt=esModuleInterop=true' as a flag when calling 'protoc'.
-if (util.Long !== Long) {
-  util.Long = Long as any;
-  configure();
-}

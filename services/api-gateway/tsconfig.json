@@ -1,7 +1,7 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "typeRoots": ["./src/types", "./node_modules/@types"],
+    "typeRoots": ["../../types", "./node_modules/@types"],
     "declaration": true,
     "outDir": "./dist",
     "baseUrl": "./",

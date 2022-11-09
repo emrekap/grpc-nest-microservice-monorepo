@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { PaidPlanType, UserRoleEnum } from '@prisma/client';
-import { Uuid } from '../config/config-factory';
 import { PrismaService } from '../data-access/prisma.service';
 
 export type CreateUserArgs = {

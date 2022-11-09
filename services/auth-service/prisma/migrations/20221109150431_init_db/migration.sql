@@ -8,7 +8,7 @@ CREATE TYPE "TokenTypeEnum" AS ENUM ('EMAIL');
 CREATE TABLE "users" (
     "id" VARCHAR(36) NOT NULL,
     "email" VARCHAR(256) NOT NULL,
-    "full_name" VARCHAR(256) NOT NULL,
+    "first_name" VARCHAR(256) NOT NULL,
     "last_name" VARCHAR(256) NOT NULL,
     "password" VARCHAR(512) NOT NULL,
     "role" "user_role_enum" NOT NULL DEFAULT 'user',

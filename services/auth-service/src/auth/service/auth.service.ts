@@ -5,7 +5,11 @@ import {
   LoginRequestDto,
   ValidateRequestDto,
 } from '../auth.dto';
-import { LoginResponse, RegisterResponse, ValidateResponse } from '../auth.pb';
+import {
+  LoginResponse,
+  RegisterResponse,
+  ValidateResponse,
+} from '../../protos/auth.pb';
 import { UserRepository } from '../user-repository';
 import { uuid } from '@grpc-monorepo/ts-shared';
 import { User } from '@prisma/client';

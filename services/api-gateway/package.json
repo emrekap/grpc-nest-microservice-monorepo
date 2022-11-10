@@ -19,8 +19,9 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "proto:auth": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto -I=node_modules/@grpc-monorepo/proto --ts_proto_out=src/auth node_modules/@grpc-monorepo/proto/auth.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb",
-    "proto:all": "npm run proto:auth"
+    "proto:auth": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto -I=node_modules/@grpc-monorepo/proto --ts_proto_out=src/protos node_modules/@grpc-monorepo/proto/auth.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb",
+    "proto:oauth": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto -I=node_modules/@grpc-monorepo/proto --ts_proto_out=src/protos node_modules/@grpc-monorepo/proto/oauth.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb",
+    "proto:all": "npm run proto:auth && npm run proto:oauth"
   },
   "dependencies": {
     "@app/routes": "0.0.1",

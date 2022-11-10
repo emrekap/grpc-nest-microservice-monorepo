@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package oauth;
+
+service OAuthService {
+  rpc InstagramAuthorize (InstagramAuthorizeRequest) returns (InstagramAuthorizeResponse) {}
+  rpc InstagramAccessToken (InstagramAccessTokenRequest) returns (InstagramAccessTokenResponse) {}
+}
+
+// Authorize
+
+message InstagramAuthorizeRequest {
+  string client_id = 1;
+  string redirect_uri = 2;
+  string response_type = 3;
+  string scope = 4;
+  string state = 5;
+}
+
+message InstagramAuthorizeResponse {
+  int32 status = 1;
+  repeated string error = 2;
+  string user = 3;
+}
+
+// AccessToken
+
+message InstagramAccessTokenRequest {
+  string client_id = 1;
+  string client_secret = 2;
+  string code = 3;
+  string grant_type = 4;
+  string redirect_uri = 5;
+}
+
+message InstagramAccessTokenResponse {
+  int32 status = 1;
+  repeated string error = 2;
+  string token = 3;
+}

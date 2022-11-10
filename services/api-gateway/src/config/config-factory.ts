@@ -1,6 +1,5 @@
 import * as path from 'path';
 import * as dotenv from 'dotenv';
-import { v4, validate } from 'uuid';
 
 import { FactoryProvider } from '@nestjs/common';
 import * as t from 'io-ts';

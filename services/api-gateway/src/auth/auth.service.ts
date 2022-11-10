@@ -1,7 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
-import { AuthServiceClient, AUTH_SERVICE_NAME, ValidateResponse } from './auth.pb';
+import {
+  AuthServiceClient,
+  AUTH_SERVICE_NAME,
+  ValidateResponse,
+} from '../protos/auth.pb';
 
 @Injectable()
 export class AuthService {

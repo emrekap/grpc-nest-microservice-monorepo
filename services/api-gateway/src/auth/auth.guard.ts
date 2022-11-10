@@ -7,7 +7,7 @@ import {
   Inject,
 } from '@nestjs/common';
 import { Request } from 'express';
-import { ValidateResponse } from './auth.pb';
+import { ValidateResponse } from '../protos/auth.pb';
 import { AuthService } from './auth.service';
 
 @Injectable()

@@ -11,13 +11,19 @@ import { Config } from './envgen/types';
  */
 const DOCKER_INTERNAL_HOST = 'host.docker.internal';
 
-const PG_ADMIN_DOCKER_HOST_PORT = 1080;
 const AUTH_DB_POSTGRES_USER = 'user';
 const AUTH_DB_POSTGRES_PASSWORD = 'pass';
 const AUTH_DB_POSTGRES_HOST = DOCKER_INTERNAL_HOST;
 const AUTH_DB_POSTGRES_DB = 'auth_db';
 const AUTH_DB_DOCKER_HOST_PORT = 15432;
 const AUTH_SERVICE_DB_URL = `postgresql://${AUTH_DB_POSTGRES_USER}:${AUTH_DB_POSTGRES_PASSWORD}@${AUTH_DB_POSTGRES_HOST}:${AUTH_DB_DOCKER_HOST_PORT}/${AUTH_DB_POSTGRES_DB}?schema=public`;
+
+const NOTIFICATION_DB_POSTGRES_USER = 'user';
+const NOTIFICATION_DB_POSTGRES_PASSWORD = 'pass';
+const NOTIFICATION_DB_POSTGRES_HOST = DOCKER_INTERNAL_HOST;
+const NOTIFICATION_DB_POSTGRES_DB = 'notification_db';
+const NOTIFICATION_DB_DOCKER_HOST_PORT = 15433;
+const NOTIFICATION_SERVICE_DB_URL = `postgresql://${NOTIFICATION_DB_POSTGRES_USER}:${NOTIFICATION_DB_POSTGRES_PASSWORD}@${NOTIFICATION_DB_POSTGRES_HOST}:${NOTIFICATION_DB_DOCKER_HOST_PORT}/${NOTIFICATION_DB_POSTGRES_DB}?schema=public`;
 
 const APP_FRONTEND_DOCKER_HOST_PORT = 4000;
 const API_GATEWAY_HOST_PORT = 3000;
@@ -46,6 +52,15 @@ const PACKAGES_DIRECTORY = path.join(__dirname, './packages');
 
 export const configs: Config[] = [
   {
+    dir: path.join(SERVICES_DIRECTORY, 'api-gateway'),
+    filename: '.env.local',
+    variables: {
+      NODE_ENV: 'development',
+      APP_BACKEND_BASE_URL,
+    },
+  },
+  // AUTH SERVICE ENV STARTED
+  {
     dir: path.join(GENERATED_DOTENVS, 'auth-service-db'),
     filename: '.env.local',
     variables: {
@@ -72,14 +87,37 @@ export const configs: Config[] = [
       DATABASE_URL: AUTH_SERVICE_DB_URL,
     },
   },
+  // AUTH SERVICE ENV END
+  // NOTIFICATION SERVICE ENV START
   {
-    dir: path.join(SERVICES_DIRECTORY, 'api-gateway'),
+    dir: path.join(GENERATED_DOTENVS, 'notification-service-db'),
     filename: '.env.local',
     variables: {
+      POSTGRES_USER: NOTIFICATION_DB_POSTGRES_USER,
+      POSTGRES_PASSWORD: NOTIFICATION_DB_POSTGRES_PASSWORD,
+      POSTGRES_DB: NOTIFICATION_DB_POSTGRES_DB,
+      POSTGRES_DB_PORT: NOTIFICATION_DB_DOCKER_HOST_PORT,
+    },
+  },
+  {
+    dir: path.join(SERVICES_DIRECTORY, 'notification-service'),
+    filename: '.env.local',
+    variables: {
+      NOTIFICATION_DB_DOCKER_HOST_PORT,
       NODE_ENV: 'development',
+      DATABASE_URL: NOTIFICATION_SERVICE_DB_URL,
       APP_BACKEND_BASE_URL,
     },
   },
+  {
+    dir: path.join(SERVICES_DIRECTORY, 'notification-service', 'prisma'),
+    filename: '.env',
+    variables: {
+      DATABASE_URL: NOTIFICATION_SERVICE_DB_URL,
+    },
+  },
+  // NOTIFICATION SERVICE ENV END
+
   {
     /**
      * These will be placed on the root of the monorepo (/appreciate-monorpo/.env).

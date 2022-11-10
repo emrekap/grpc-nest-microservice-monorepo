@@ -8,7 +8,8 @@
     "build-nestjs-app-backend": "sudo docker build -f ./services/nestjs-app-backend/Dockerfile .",
     "build-db-migrations": "sudo docker build -f ./packages/db/Dockerfile .",
     "sync": "sh ./devbox/sync.sh",
-    "init": "sh ./devbox/init.sh"
+    "init": "sh ./devbox/init.sh",
+    "service:create": "git clone git@github.com:emrekap/grpc-nestjs-microservice-template.git"
   },
   "dependencies": {
     "dotenv-cli": "6.0.0"

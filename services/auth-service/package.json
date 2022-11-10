@@ -1,8 +1,8 @@
 {
-  "name": "grpc-nest-auth-svc",
+  "name": "auth-service",
   "version": "1.0.0",
   "description": "",
-  "author": "Kevin Vogel",
+  "author": "Emre Kaplan",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {

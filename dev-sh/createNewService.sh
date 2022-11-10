@@ -5,14 +5,16 @@ echo $(pwd)
 
 if [[ $(pwd) =~ "dev-sh" ]];
 then
-    git clone git@github.com:emrekap/grpc-nestjs-microservice-template.git ../services/$1
+    git clone --depth=1 --branch=main git@github.com:emrekap/grpc-nestjs-microservice-template.git ../services/$1
     rm -rf ../services/$1/.git
+    cd ..
+    npm run lerna
 else 
-    git clone git@github.com:emrekap/grpc-nestjs-microservice-template.git ./services/$1
+    git clone --depth=1 --branch=main git@github.com:emrekap/grpc-nestjs-microservice-template.git ./services/$1
     rm -rf ./services/$1/.git
+    npm run lerna
 fi
 
-npm run lerna
 
 echo "!!!!!! IMPORTANT !!!!!!"
 echo "Don't forget change package name for new service. Check package.json for $1"

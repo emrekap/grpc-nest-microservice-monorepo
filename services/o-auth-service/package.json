@@ -1,0 +1,76 @@
+{
+  "name": "service-name",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Emre Kaplan",
+  "private": true,
+  "license": "UNLICENSED",
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "nest build",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "prisma:migrate": "npx prisma migrate dev",
+    "start": "nest start",
+    "start:dev": "LOCAL=true nest start --watch",
+    "start:debug": "LOCAL=true nest start --debug --watch",
+    "start:prod": "node dist/main",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "test": "jest",
+    "test:watch": "LOCAL=true jest --watch",
+    "test:cov": "LOCAL=true jest --coverage",
+    "test:debug": "LOCAL=true node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:e2e": "LOCAL=true jest --config ./test/jest-e2e.json",
+    "proto:auth": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto -I=node_modules/@grpc-monorepo/proto --ts_proto_out=src/auth node_modules/@grpc-monorepo/proto/auth.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb",
+    "proto:all": "npm run proto:auth"
+  },
+  "dependencies": {
+    "@app/routes": "0.0.1",
+    "@grpc-monorepo/proto": "1.0.0",
+    "@grpc-monorepo/ts-shared": "1.0.0",
+    "@grpc/grpc-js": "^1.5.8",
+    "@grpc/proto-loader": "^0.6.9",
+    "@nestjs/common": "^8.0.0",
+    "@nestjs/config": "^1.2.0",
+    "@nestjs/core": "^8.0.0",
+    "@nestjs/microservices": "^8.4.1",
+    "@nestjs/platform-express": "^8.0.0",
+    "@prisma/client": "^4.5.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.13.2",
+    "dotenv": "16.0.1",
+    "io-ts": "2.2.17",
+    "io-ts-types": "0.5.16",
+    "pg": "^8.7.3",
+    "reflect-metadata": "^0.1.13",
+    "rimraf": "^3.0.2",
+    "rxjs": "^7.2.0",
+    "ts-custom-error": "3.2.0"
+  },
+  "devDependencies": {
+    "ts-proto": "1.131.0",
+    "protoc-gen-ts": "0.8.5",
+    "@protobuf-ts/plugin": "2.8.1",
+    "@types/express": "^4.17.14",
+    "@types/supertest": "^2.0.11",
+    "@types/validator": "^13.7.6",
+    "jest": "^27.2.5",
+    "prisma": "^4.5.0"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src",
+    "testRegex": ".*\\.spec\\.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "collectCoverageFrom": [
+      "**/*.(t|j)s"
+    ],
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node"
+  }
+}

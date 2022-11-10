@@ -30,6 +30,7 @@
     "@grpc-monorepo/ts-shared": "1.0.0",
     "@grpc/grpc-js": "^1.5.8",
     "@grpc/proto-loader": "^0.6.9",
+    "@nestjs/axios": "1.0.0",
     "@nestjs/common": "^8.0.0",
     "@nestjs/config": "^1.2.0",
     "@nestjs/core": "^8.0.0",

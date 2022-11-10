@@ -166,6 +166,7 @@ export const configs: Config[] = [
     filename: '.env',
     variables: {
       AUTH_DB_DOCKER_HOST_PORT,
+      O_AUTH_DB_DOCKER_HOST_PORT,
       MAILHOG_SMTP_DOCKER_HOST_PORT,
       MAILHOG_WEB_UI_DOCKER_HOST_PORT,
       LOCALSTACK_DOCKER_HOST_PORT,

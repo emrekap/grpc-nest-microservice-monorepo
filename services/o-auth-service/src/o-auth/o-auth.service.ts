@@ -11,10 +11,10 @@ import {
 @Injectable()
 export class OAuthService {
   public async instagramAuthorize({}: InstagramAuthorizeRequestDto): Promise<InstagramAuthorizeResponse> {
-    return;
+    return { status: 200, user: '', error: null };
   }
 
   public async instagramAccessToken({}: InstagramAccessTokenRequestDto): Promise<InstagramAccessTokenResponse> {
-    return;
+    return { status: 200, token: '', error: null };
   }
 }

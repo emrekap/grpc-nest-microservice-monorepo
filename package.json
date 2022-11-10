@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "lerna": "npx lerna bootstrap",
-    "envgen": "sudo npx ts-node ./envgen --resolveJsonModule",
+    "envgen": "npx ts-node ./envgen --resolveJsonModule",
     "prune": "lerna bootstrap -- --production && npm prune --production",
     "build-nestjs-app-backend": "sudo docker build -f ./services/nestjs-app-backend/Dockerfile .",
     "build-db-migrations": "sudo docker build -f ./packages/db/Dockerfile .",

@@ -1,8 +1,8 @@
 /* eslint-disable */
-import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
-import { Observable } from "rxjs";
+import { GrpcMethod, GrpcStreamMethod } from '@nestjs/microservices';
+import { Observable } from 'rxjs';
 
-export const protobufPackage = "oauth";
+export const protobufPackage = 'oauth';
 
 export interface InstagramAuthorizeRequest {
   clientId: string;
@@ -32,37 +32,64 @@ export interface InstagramAccessTokenResponse {
   token: string;
 }
 
-export const OAUTH_PACKAGE_NAME = "oauth";
+export const OAUTH_PACKAGE_NAME = 'oauth';
 
 export interface OAuthServiceClient {
-  instagramAuthorize(request: InstagramAuthorizeRequest): Observable<InstagramAuthorizeResponse>;
+  instagramAuthorize(
+    request: InstagramAuthorizeRequest,
+  ): Observable<InstagramAuthorizeResponse>;
 
-  instagramAccessToken(request: InstagramAccessTokenRequest): Observable<InstagramAccessTokenResponse>;
+  instagramAccessToken(
+    request: InstagramAccessTokenRequest,
+  ): Observable<InstagramAccessTokenResponse>;
 }
 
 export interface OAuthServiceController {
   instagramAuthorize(
     request: InstagramAuthorizeRequest,
-  ): Promise<InstagramAuthorizeResponse> | Observable<InstagramAuthorizeResponse> | InstagramAuthorizeResponse;
+  ):
+    | Promise<InstagramAuthorizeResponse>
+    | Observable<InstagramAuthorizeResponse>
+    | InstagramAuthorizeResponse;
 
   instagramAccessToken(
     request: InstagramAccessTokenRequest,
-  ): Promise<InstagramAccessTokenResponse> | Observable<InstagramAccessTokenResponse> | InstagramAccessTokenResponse;
+  ):
+    | Promise<InstagramAccessTokenResponse>
+    | Observable<InstagramAccessTokenResponse>
+    | InstagramAccessTokenResponse;
 }
 
 export function OAuthServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["instagramAuthorize", "instagramAccessToken"];
+    const grpcMethods: string[] = [
+      'instagramAuthorize',
+      'instagramAccessToken',
+    ];
     for (const method of grpcMethods) {
-      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-      GrpcMethod("OAuthService", method)(constructor.prototype[method], method, descriptor);
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(
+        constructor.prototype,
+        method,
+      );
+      GrpcMethod('OAuthService', method)(
+        constructor.prototype[method],
+        method,
+        descriptor,
+      );
     }
     const grpcStreamMethods: string[] = [];
     for (const method of grpcStreamMethods) {
-      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-      GrpcStreamMethod("OAuthService", method)(constructor.prototype[method], method, descriptor);
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(
+        constructor.prototype,
+        method,
+      );
+      GrpcStreamMethod('OAuthService', method)(
+        constructor.prototype[method],
+        method,
+        descriptor,
+      );
     }
   };
 }
 
-export const O_AUTH_SERVICE_NAME = "OAuthService";
+export const O_AUTH_SERVICE_NAME = 'OAuthService';

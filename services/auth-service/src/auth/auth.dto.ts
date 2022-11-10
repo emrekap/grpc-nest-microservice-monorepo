@@ -1,5 +1,9 @@
 import { IsEmail, IsString, MinLength } from 'class-validator';
-import { LoginRequest, RegisterRequest, ValidateRequest } from './auth.pb';
+import {
+  LoginRequest,
+  RegisterRequest,
+  ValidateRequest,
+} from '../protos/auth.pb';
 
 export class LoginRequestDto implements LoginRequest {
   @IsEmail()

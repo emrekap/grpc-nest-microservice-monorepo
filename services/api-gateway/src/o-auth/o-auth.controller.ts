@@ -6,6 +6,7 @@ import {
   OnModuleInit,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
@@ -31,9 +32,10 @@ export class OAuthController implements OnModuleInit {
 
   @Get('instagram/authorize')
   private async instagramAuthorize(
-    @Body() body: InstagramAuthorizeRequest,
+    @Query() query: InstagramAuthorizeRequest,
   ): Promise<Observable<InstagramAuthorizeResponse>> {
-    return this.svc.instagramAuthorize(body);
+    console.log(query);
+    return this.svc.instagramAuthorize(query);
   }
 
   @Get('instagram/accessToken')

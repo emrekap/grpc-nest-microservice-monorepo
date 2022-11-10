@@ -20,6 +20,7 @@ export class OAuthController {
   private instagramAuthorize(
     payload: InstagramAuthorizeRequestDto,
   ): Promise<InstagramAuthorizeResponse> {
+    console.log('first: ', payload);
     return this.service.instagramAuthorize(payload);
   }
 

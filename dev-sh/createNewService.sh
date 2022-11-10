@@ -1,8 +1,6 @@
 #!/bin/bash
 echo "Service name: $1"
 
-echo $(pwd)
-
 if [[ $(pwd) =~ "dev-sh" ]];
 then
     git clone --depth=1 --branch=main git@github.com:emrekap/grpc-nestjs-microservice-template.git ../services/$1

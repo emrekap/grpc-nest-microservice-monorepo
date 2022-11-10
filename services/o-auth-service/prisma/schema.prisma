@@ -10,3 +10,17 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model InstagramAccessToken {
+  id             String   @id @db.VarChar(36)
+  internalUserId String   @unique @db.VarChar(36)
+  externalUserId String   @unique @db.VarChar(36)
+  scope          String   @db.VarChar(256)
+  state          String   @db.VarChar(256)
+  accessToken    String   @db.VarChar(512)
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt      DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+  validUntil     DateTime @map("valid_until") @db.Timestamptz(6)
+
+  @@map("instagram_access_tokens")
+}

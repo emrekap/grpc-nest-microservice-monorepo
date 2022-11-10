@@ -26,7 +26,6 @@ const configCodec = t.type({
 
 export function useFactory() {
   try {
-    console.log('first');
     if (process.env.LOCAL === 'true') {
       dotenv.config({
         path: path.join(__dirname, '../../.env.local'),
@@ -35,7 +34,6 @@ export function useFactory() {
     if (process.env.NODE_ENV === 'test') {
       return configMock;
     }
-    console.log(process.env);
     const config = tryDecodeCodec<Config>(configCodec, process.env);
 
     return config;

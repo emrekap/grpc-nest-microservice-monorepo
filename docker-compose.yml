@@ -11,6 +11,16 @@ services:
     volumes:
       - auth-postgres-db-data:/var/lib/postgresql/data
 
+  o-auth-service-db:
+    container_name: o-auth-service-db
+    env_file:
+      - ./envgen/generated/o-auth-service-db/.env.local
+    image: postgres:14.5-alpine
+    ports:
+      - ${O_AUTH_DB_DOCKER_HOST_PORT}:5432
+    volumes:
+      - o-auth-postgres-db-data:/var/lib/postgresql/data
+
   mailhog:
     image: mailhog/mailhog
     container_name: mailhog
@@ -34,5 +44,6 @@ services:
 
 volumes:
   auth-postgres-db-data: {}
+  o-auth-postgres-db-data: {}
   # localstack-tmp: {}
 # TODO: look into setting up NFS volumes for improved dev performance https://www.jeffgeerling.com/blog/2020/revisiting-docker-macs-performance-nfs-volumes

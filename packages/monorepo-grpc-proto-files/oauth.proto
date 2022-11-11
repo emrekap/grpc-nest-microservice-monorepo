@@ -20,7 +20,6 @@ message InstagramAuthorizeRequest {
 message InstagramAuthorizeResponse {
   int32 status = 1;
   repeated string error = 2;
-  string user = 3;
 }
 
 // AccessToken

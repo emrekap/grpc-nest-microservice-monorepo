@@ -1,6 +1,6 @@
 import { BuiltQueryParamRoute, BuiltRoute } from './RouteBuilder';
 
-type HostId = 'apiGateway' | 'authService';
+type HostId = 'apiGateway';
 export type HostMap = Record<HostId, string>;
 type RoutesMap = Record<
   string,

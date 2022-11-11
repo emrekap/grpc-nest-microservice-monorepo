@@ -15,7 +15,6 @@ export interface InstagramAuthorizeRequest {
 export interface InstagramAuthorizeResponse {
   status: number;
   error: string[];
-  user: string;
 }
 
 export interface InstagramAccessTokenRequest {

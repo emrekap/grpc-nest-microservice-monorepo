@@ -12,6 +12,7 @@ import { route } from './RouteBuilder';
 // expose routes logic, but also url building logic. This is done via finalizeRoutes().
 
 const authServiceBase = route().segment('auth');
+const instagramOAuthServiceBase = route().segment('oauth').segment('instagram');
 
 const baseRoutes = checkHostIdToRoutesMap({
   apiGateway: { healthCheck: route().segment('health').build() },
@@ -20,18 +21,21 @@ const baseRoutes = checkHostIdToRoutesMap({
     register: authServiceBase.segment('register').build(),
     validate: authServiceBase.segment('validate').build(),
   },
+  oAuthService: {
+    instagramAuthorize: instagramOAuthServiceBase.segment('authorize').build(),
+    instagramAccessToken: instagramOAuthServiceBase
+      .segment('accessToken')
+      .build(),
+  },
 });
 
 export const finalizeRoutes = ({
   apiGatewayBaseUrl,
-  authServiceBaseUrl,
 }: {
   apiGatewayBaseUrl: string;
-  authServiceBaseUrl: string;
 }) => {
   const hostMap: HostMap = {
     apiGateway: apiGatewayBaseUrl,
-    authService: authServiceBaseUrl,
   };
   return toURLMap(baseRoutes, hostMap);
 };

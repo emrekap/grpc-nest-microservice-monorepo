@@ -1,4 +1,4 @@
-import { finalizeRoutes } from '@app/routes';
+import { finalizeRoutes } from '@grpc-monorepo/routes';
 import { useFactory } from '../config/config-factory';
 
 export const routes = (() => {
@@ -12,6 +12,5 @@ export const routes = (() => {
 
   return finalizeRoutes({
     apiGatewayBaseUrl: config.APP_BACKEND_BASE_URL,
-    authServiceBaseUrl: config.APP_BACKEND_BASE_URL,
   });
 })();

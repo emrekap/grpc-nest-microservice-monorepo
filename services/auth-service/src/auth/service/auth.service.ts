@@ -31,7 +31,7 @@ export class AuthService {
       return {
         status: HttpStatus.CONFLICT,
         error: ['E-Mail already exists'],
-        user: null,
+        token: null,
       };
     }
     const encodedPassword = this.jwtService.encodePassword(password);
@@ -44,11 +44,12 @@ export class AuthService {
       lastName: '',
       role: 'user',
     });
+    const token: string = this.jwtService.generateToken(createdUser);
 
     return {
       status: HttpStatus.CREATED,
       error: null,
-      user: JSON.stringify(createdUser),
+      token,
     };
   }
 
@@ -60,7 +61,7 @@ export class AuthService {
 
     if (!user) {
       return {
-        status: HttpStatus.NOT_FOUND,
+        status: HttpStatus.NO_CONTENT,
         error: ['E-Mail not found'],
         token: null,
       };

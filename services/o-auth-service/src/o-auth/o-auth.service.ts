@@ -1,6 +1,8 @@
 import { HttpService } from '@nestjs/axios';
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
+import axios from 'axios';
+
 import {
   InstagramAccessTokenResponse,
   InstagramAuthorizeResponse,
@@ -24,28 +26,51 @@ export class OAuthService {
           `https://api.instagram.com/oauth/authorize${queryParams}`,
         ),
       );
-      return { status, user: JSON.stringify(data), error: null };
+      console.log('data: ', data);
+      return { status, error: null };
     } catch (error) {
       // const { status, statusText } = error.response;
-
-      return { status: 500, user: '', error: [JSON.stringify(error)] };
+      if (axios.isAxiosError(error)) {
+        const { response } = error;
+        console.log(response);
+        return {
+          status: response.status,
+          error: [JSON.stringify(response.data)],
+        };
+      }
+      return { status: 500, error: [JSON.stringify(error)] };
     }
   }
 
   public async instagramAccessToken(
     params: InstagramAccessTokenRequestDto,
   ): Promise<InstagramAccessTokenResponse> {
+    const { clientId, clientSecret, code, grantType, redirectUri } = params;
     try {
-      const response = await firstValueFrom(
+      const { data } = await firstValueFrom(
         this.httpService.post<InstagramAccessTokenResponse>(
           'https://api.instagram.com/oauth/access_token',
-          {
-            data: params,
-          },
+          JSON.stringify({
+            client_id: clientId,
+            client_secret: clientSecret,
+            code: code,
+            grant_type: grantType,
+            redirect_uri: redirectUri,
+          }),
         ),
       );
-      return response.data;
+      return data;
     } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const { response } = error;
+        console.log(response);
+        console.log(code);
+        return {
+          status: response.status,
+          token: '',
+          error: [JSON.stringify(response.data)],
+        };
+      }
       // const { status, statusText } = error.response;
       return { status: 500, token: '', error: [JSON.stringify(error)] };
     }

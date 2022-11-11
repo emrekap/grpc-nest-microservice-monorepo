@@ -14,7 +14,7 @@ export interface RegisterRequest {
 export interface RegisterResponse {
   status: number;
   error: string[];
-  user: string;
+  token: string;
 }
 
 export interface LoginRequest {

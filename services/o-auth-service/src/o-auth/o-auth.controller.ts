@@ -11,7 +11,6 @@ import {
 } from './o-auth.dto';
 import { OAuthService } from './o-auth.service';
 
-@Controller('o-auth')
 export class OAuthController {
   @Inject(OAuthService)
   private readonly service: OAuthService;
@@ -20,7 +19,7 @@ export class OAuthController {
   private instagramAuthorize(
     payload: InstagramAuthorizeRequestDto,
   ): Promise<InstagramAuthorizeResponse> {
-    console.log('first: ', payload);
+    console.log('o-auth-service instagramAuthorize payload: ', payload);
     return this.service.instagramAuthorize(payload);
   }
 
@@ -28,6 +27,8 @@ export class OAuthController {
   private instagramAccessToken(
     payload: InstagramAccessTokenRequestDto,
   ): Promise<InstagramAccessTokenResponse> {
+    console.log('o-auth-service instagramAccessToken payload: ', payload);
+
     return this.service.instagramAccessToken(payload);
   }
 }

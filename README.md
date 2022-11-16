@@ -1,4 +1,4 @@
-## Create new service
+## Initial install
 
 ```bash
 $ cd packages/app-routes && npm run build

@@ -24,6 +24,8 @@ export class AuthService {
   public async register({
     email,
     password,
+    firstname,
+    lastname,
   }: RegisterRequestDto): Promise<RegisterResponse> {
     let user = await this.userRepository.findByEmail(email);
 
@@ -40,8 +42,8 @@ export class AuthService {
       id: uuid(),
       email,
       password: encodedPassword,
-      firstName: '',
-      lastName: '',
+      firstName: firstname,
+      lastName: lastname,
       role: 'user',
     });
     const token: string = this.jwtService.generateToken(createdUser);

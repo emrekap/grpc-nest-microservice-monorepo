@@ -29,7 +29,13 @@ export class UserRepository {
 
   public create(data: CreateUserArgs) {
     return this.prismaService.user.create({
-      data,
+      data: {
+        id: data.id,
+        email: data.email,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        password: data.password,
+      },
     });
   }
 
